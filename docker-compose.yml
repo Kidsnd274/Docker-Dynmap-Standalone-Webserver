@@ -1,20 +1,11 @@
----
-version: "2.1"
 services:
-  apache2:
-    image: ubuntu/apache2
-    container_name: mc_dynmap
+  dynmap_standalone_web:
+    image: php:apache
+    container_name: apache2
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Singapore/Singapore
     volumes:
-      - .\www\web:/var/www/web:ro
-      - .\apache2_conf\conf-available:/etc/apache2/conf-available:ro
-      - .\apache2_conf\mods-available:/etc/apache2/mods-available:ro
-      - .\apache2_conf\sites-available:/etc/apache2/sites-available:ro
-      - .\apache2_conf\apache2.conf:/etc/apache2/apache2.conf:ro
-      - .\apache2_conf\ports.conf:/etc/apache2/ports.conf:ro
+      - ./web:/var/www/html:ro  # Adjust the file location to your dynamp web directory
     ports:
       - 8080:80
     restart: unless-stopped

@@ -1,1 +1,0 @@
-Place your Minecraft dynmap web files here.
