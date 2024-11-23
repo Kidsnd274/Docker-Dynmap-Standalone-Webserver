@@ -1,11 +1,15 @@
 services:
   dynmap_standalone_web:
-    image: php:apache
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: php:apache
     container_name: apache2
     environment:
       - TZ=Singapore/Singapore
     volumes:
-      - ./web:/var/www/html:ro  # Adjust the file location to your dynamp web directory
+      - ./web:/var/www/html  # Adjust the file location to your dynamp web directory
+      # - ./dynmap.db:/var/www/html/db/dynmap.db
     ports:
       - 8080:80
     restart: unless-stopped
