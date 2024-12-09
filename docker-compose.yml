@@ -2,10 +2,24 @@ services:
   dynmap_standalone_web:
     image: php:apache
     container_name: apache2
-    environment:
-      - TZ=Singapore/Singapore
     volumes:
       - ./web:/var/www/html:ro  # Adjust the file location to your dynamp web directory
     ports:
       - 8080:80
+    restart: unless-stopped
+    depends_on:
+      - dynmap_db
+
+  dynmap_db:
+    image: mariadb:11.4
+    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306  # Exposes MariaDB's port to the host machine (for connecting MC Server)
     restart: unless-stopped
